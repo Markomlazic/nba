@@ -1,0 +1,35 @@
+---
+title: "NBA teams in California by Facebook fans"
+author: "MML"
+date: "28 1 2019"
+output: 
+  html_document:
+    keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r chink 1, echo = FALSE}
+library(leaflet)
+
+# Coordinates of three NBA teams arenas
+lat <- c(34.0430175, 37.7503, 38.5802, 34.0430175)
+lng <- c(-118.2672541, -122.2030, -121.4997, -118.2672541)
+nba_df <- data.frame(lat = lat, lng = lng)
+label <- c("LA Lakers", "Golden State Warriors", "Sacramento Kings", "LA Clippers")
+
+# Number of facebbok fans
+fnum <- c(21.52, 11.32, 6.61, 3.81)
+# NBA logo icon
+nba_logo <- makeIcon(iconUrl = "https://theundefeated.com/wp-content/uploads/2017/05/nba-logo.png", iconWidth = 20, iconHeight = 43)
+```
+
+```{r map chunk, echo = FALSE}
+nba_df %>% 
+  leaflet() %>% 
+    addTiles() %>%
+    addMarkers(popup = label, icon = nba_logo) %>%
+    addCircles(weight = 1, radius = fnum * 10000)
+```
